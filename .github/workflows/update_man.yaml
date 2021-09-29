@@ -1,0 +1,41 @@
+name: update_docs
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  trigger_pull:
+    name: trigger_pull
+    runs-on: ubuntu-20.04
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: update version number
+        run: |
+            git pull
+            awk -F. '{$3++;print > "cwl/repo_version.txt"}' OFS=. cwl/repo_version.txt 
+      - name: Update github
+        run: |
+          git config --local user.name "Github Action Bot"
+          git config --local user.email "danicassol@gmail.com"
+          git add -A
+          git commit -m "Bot update version number" -a
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+      - name: Dispatch event 1
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.SPS_WF }}
+          repository: 'systemPipeR/test_repo1'
+          event-type: cwl-updated
+      - name: Dispatch event 2
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.SPS_WF }}
+          repository: 'systemPipeR/test_repo2'
+          event-type: cwl-updated
