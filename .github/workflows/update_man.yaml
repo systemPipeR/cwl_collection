@@ -46,3 +46,10 @@ jobs:
           token: ${{ secrets.SPS_WF }}
           repository: 'dcassol/systemPipeR'
           event-type: cwl-updated
+      - name: Dispatch event 4
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.SPS_WF }}
+          repository: 'lz100/systemPipeR'
+          event-type: cwl-updated
+
