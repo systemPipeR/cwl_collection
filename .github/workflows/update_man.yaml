@@ -1,4 +1,4 @@
-name: update_docs
+name: update_cwl_files
 on:
   push:
     branches:
@@ -19,37 +19,19 @@ jobs:
             awk -F. '{$3++;print > "cwl/repo_version.txt"}' OFS=. cwl/repo_version.txt
       - name: Update github
         run: |
-          git config --local user.name "Github Action Bot"
+          git config --local user.name "dcassol"
           git config --local user.email "danicassol@gmail.com"
           git add -A
-          git commit -m "Bot update version number" -a
+          git commit -m "Bot update cwl description files" -a
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
-      - name: Dispatch event 1
+      - name: Dispatch event systemPipeR
         uses: peter-evans/repository-dispatch@v1
         with:
           token: ${{ secrets.CWL }}
-          repository: 'systemPipeR/test_repo1'
-          event-type: cwl-updated
-      - name: Dispatch event 2
-        uses: peter-evans/repository-dispatch@v1
-        with:
-          token: ${{ secrets.CWL }}
-          repository: 'systemPipeR/test_repo2'
-          event-type: cwl-updated
-      - name: Dispatch event 3
-        uses: peter-evans/repository-dispatch@v1
-        with:
-          token: ${{ secrets.CWL }}
-          repository: 'dcassol/systemPipeR'
-          event-type: cwl-updated
-      - name: Dispatch event 4
-        uses: peter-evans/repository-dispatch@v1
-        with:
-          token: ${{ secrets.CWL }}
-          repository: 'lz100/systemPipeR'
+          repository: 'tgirke/systemPipeR/'
           event-type: cwl-updated
 
