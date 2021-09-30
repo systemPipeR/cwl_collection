@@ -16,7 +16,7 @@ jobs:
       - name: update version number
         run: |
             git pull
-            awk -F. '{$3++;print > "cwl/repo_version.txt"}' OFS=. cwl/repo_version.txt 
+            awk -F. '{$3++;print > "cwl/repo_version.txt"}' OFS=. cwl/repo_version.txt
       - name: Update github
         run: |
           git config --local user.name "Github Action Bot"
@@ -31,25 +31,25 @@ jobs:
       - name: Dispatch event 1
         uses: peter-evans/repository-dispatch@v1
         with:
-          token: ${{ secrets.SPS_WF }}
+          token: ${{ secrets.CWL }}
           repository: 'systemPipeR/test_repo1'
           event-type: cwl-updated
       - name: Dispatch event 2
         uses: peter-evans/repository-dispatch@v1
         with:
-          token: ${{ secrets.SPS_WF }}
+          token: ${{ secrets.CWL }}
           repository: 'systemPipeR/test_repo2'
           event-type: cwl-updated
       - name: Dispatch event 3
         uses: peter-evans/repository-dispatch@v1
         with:
-          token: ${{ secrets.SPS_WF }}
+          token: ${{ secrets.CWL }}
           repository: 'dcassol/systemPipeR'
           event-type: cwl-updated
       - name: Dispatch event 4
         uses: peter-evans/repository-dispatch@v1
         with:
-          token: ${{ secrets.SPS_WF }}
+          token: ${{ secrets.CWL }}
           repository: 'lz100/systemPipeR'
           event-type: cwl-updated
 
